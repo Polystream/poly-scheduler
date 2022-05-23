@@ -17,14 +17,6 @@ data:
       # Ensure only the first queueSort plugin is rendered.
 
  {{- $enabledPlugins := .Values.plugins.enabled -}}
-
-  {{- if and (.Values.global.queueSort) (has (index .Values.global.queueSort 0) $enabledPlugins) }}
-        queueSort:
-          enabled:
-          - name: {{ index .Values.global.queueSort 0 }}
-          disabled:
-          - name: "*"
-  {{- end }}
    
     {{- $hasExtension := true -}}
     
@@ -44,5 +36,3 @@ data:
       {{- end }}
 
  {{- end }}
-
-  {{- /* TODO: wire CRD installation with enabled plugins. */}}

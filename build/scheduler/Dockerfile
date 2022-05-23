@@ -11,18 +11,14 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-ARG ARCH
 FROM golang:1.17.6
 
 WORKDIR /go/src/sigs.k8s.io/scheduler-plugins
 COPY . .
-ARG ARCH
-ARG RELEASE_VERSION
-RUN RELEASE_VERSION=${RELEASE_VERSION} make build-scheduler.$ARCH
 
-FROM $ARCH/alpine:3.12
+FROM amd64/alpine:3.12
 
-COPY --from=0 /go/src/sigs.k8s.io/scheduler-plugins/bin/kube-scheduler /bin/kube-scheduler
+COPY --from=0 /go/src/sigs.k8s.io/scheduler-plugins/bin/kube-scheduler /usr/local/bin/kube-scheduler
 
-WORKDIR /bin
-CMD ["kube-scheduler"]
+COPY . .
+WORKDIR /usr/local

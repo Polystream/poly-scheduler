@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pod-test
+  namespace: kube-system
+  labels:
+    name: multischeduler-example
+spec:
+  schedulerName: poly-scheduler
+  containers:
+  - name: pod-test
+    image: hello-world
